@@ -1,0 +1,23 @@
+@font-face {
+    font-family: IBMPlexSansBold;
+    src: url(fonts_images/IBMPlexSans-Bold.ttf);
+}
+
+@font-face {
+    font-family: IBMPlexSans;
+    src: url(fonts_images/IBMPlexSans-Light.ttf);
+}
+
+#title {
+    font-family: 'IBMPlexSansBold';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 30px;
+    letter-spacing: 0.5em;
+
+    color: white;
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 20px;
+}
