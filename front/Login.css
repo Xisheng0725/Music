@@ -1,0 +1,177 @@
+body, html {
+    height: 100%;
+    margin: 0; 
+    padding: 0;
+  }
+
+* {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: IBMPlexSansBold;
+    src: url(fonts_images/IBMPlexSans-Bold.ttf);
+}
+
+@font-face {
+    font-family: IBMPlexSans;
+    src: url(fonts_images/IBMPlexSans-Light.ttf);
+}
+
+.background-box {
+    background: #FFFFFF00;
+    /* background: purple; */
+
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-top: -250px;
+    margin-left: -350px;
+
+    width: 700px;
+    height: 480px;
+
+    align-items: center;
+}
+
+#title {
+    font-family: 'IBMPlexSansBold';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 30px;
+    letter-spacing: 0.5em;
+
+    color: white;
+    text-align: center;
+    left: 50%;
+    margin-top: 10px;
+}
+
+#subtitle {
+    font-family: 'IBMPlexSans';
+    color: white;
+    letter-spacing: 0.1em;
+    margin-top: -10px;
+    text-align: center;
+    margin-left: -10px;
+    font-size: 17px;
+    font-weight: 1000000;
+}
+
+hr {
+    width: 540px;
+    height: 1px;
+    margin-top: -10px;
+    color: white;
+}
+
+h5 {
+    font-family: 'IBMPlexSans';
+    color: white;
+    text-align: center;
+    margin-left: 0px;
+    letter-spacing: 0.1em;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.login-text {
+    font-family: 'DroidSans';
+    color: rgba(0, 0, 0, 0.44);
+    font-style: normal;
+    text-align: left;
+    
+    margin-left: 50px;
+    margin-bottom: 10px;
+}
+
+input {
+    margin-left: 200px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+
+    background: rgba(255, 255, 255, 0.8);
+    border-width: 0px;
+    border-radius: 60px;
+
+    height: 40px;
+    width: 300px;
+
+    font-family:'IBMPlexSans';
+    font-size: 16px;
+
+    padding: 10px;
+}
+
+::placeholder {
+    color: white;
+}
+
+#login-button {
+    font-family: 'IBMPlexSans';
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 0.1em;
+    color: white; 
+
+    border-radius: 60px;
+    border: 2px solid #FFFFFF;
+
+    background: rgba(217, 217, 217, 0.1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    height: 45px;
+    width: 150px;
+
+    margin-top: 15px;
+    /* margin-left: 50px; */
+    margin-bottom: 45px;
+
+    left: 50%;    
+    cursor: pointer;
+
+    margin-left: 280px;
+}
+
+#line-word {
+    margin-top:10000px;
+    font-family: 'IBMPlexSans';
+    font-size: 13px;
+    color: white;
+    background-color: #16295A;
+    padding: 0 20px;
+}
+
+.bottom-text {
+    text-align: center;
+    width: 100%;
+
+    font-family: 'IBMPlexSans';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+
+    line-height: 21px;
+    text-decoration-line: underline;
+    color: white;
+
+    cursor: pointer;
+}
+
+#invalid-email {
+    color:rgba(0, 0, 0, 0);
+}
+
+#invalid-password {
+    color:rgba(0, 0, 0, 0);
+}
+
+.invalid {
+    font-family: 'IBMPlexSans';
+    font-size: 10px;
+    margin-left: 210px;
+    margin-top: -10px;
+    margin-bottom: 5px;
+}
