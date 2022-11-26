@@ -4,8 +4,8 @@ var censoredPassword;
 var passwordShown=false;
 
 window.onload = ()=> {
-    //fetch password from backend
-    //fetch email from backend
+    // fetch password from prev page
+    // fetch email from prev page
     censorPassword();    
     console.log("entered");
     document.getElementById('email').innerHTML = email+"<br>";
@@ -31,5 +31,5 @@ function censorPassword() {
 }
 
 function changePassword() {
-    
+
 }

@@ -1,15 +1,15 @@
 async function login() {
-    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value.toLowerCase();
     const password = document.getElementById("password").value;
 
-    if (username.length === 0 || password.length === 0) {
+    if (email.length === 0 || password.length === 0) {
         alert("Fields cannot be empty. Please try again.");
         return;
     }
 
     var res = false;
 
-    await fetch(url + "/users/find-user/" + username, { method: 'GET', mode: 'cors' })
+    await fetch(url + "/users/find-user/" + email, { method: 'GET', mode: 'cors' })
         .then(response => response.json())
         .then((result) => {
             res = result;
@@ -18,12 +18,12 @@ async function login() {
             console.error('Error:', error);
         });
 
-    console.log(res);
+    // console.log(res);
 
     if (res) {
         var pass = "";
 
-        await fetch(url + "/users/match-credentials/" + username, { method: 'GET', mode: 'cors' })
+        await fetch(url + "/users/match-credentials/" + email, { method: 'GET', mode: 'cors' })
             .then(response => response.json())
             .then((result) => {
                 pass = result[0];
@@ -33,6 +33,9 @@ async function login() {
             });
 
         if (pass === password) {
+            localStorage.setItem("isGuest", false);
+            localStorage.setItem("email", email);
+            localStorage.setItem("password", password);
             location.href = 'search.html';
             return;
         } else {
@@ -41,23 +44,34 @@ async function login() {
             return;
         }
     } else {
-        alert("That username does not exist. Please try again.");
+        alert("That email does not exist. Please try again.");
         return;
     }
 }
 
-async function createUser() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+function guestLogin() {
+    localStorage.setItem("isGuest", true);
+    location.href='search.html';
+}
 
-    if (username.length === 0 || password.length === 0) {
+async function createUser() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const password2 = document.getElementById("password2").value;
+
+    if (email.length === 0 || password.length === 0 || password2.length === 0) {
         alert("Fields cannot be empty. Please try again.");
         return;
     }
 
+    //check if email is valid
+    if (!checkValidEmail(email)) {
+
+    }
+
     var res = false;
 
-    await fetch(url + "/users/find-user/" + username, { method: 'GET', mode: 'cors' })
+    await fetch(url + "/users/find-user/" + email, { method: 'GET', mode: 'cors' })
         .then(response => response.json())
         .then((result) => {
             res = result;
@@ -69,7 +83,7 @@ async function createUser() {
     console.log(res);
 
     if (res) {
-        alert("Sorry! The username " + " is taken. Please try another.");
+        alert("Sorry! The email " + " is taken. Please try another.");
         return;
     }
 
@@ -77,7 +91,7 @@ async function createUser() {
         {
             method: 'POST',
             mode: 'cors',
-            body: JSON.stringify({ "username": username, "password": password }),
+            body: JSON.stringify({ "email": email, "password": password }),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -91,9 +105,9 @@ async function createUser() {
     return;
 }
 
-function getPasswordByUsername(username) {
+function getPasswordByemail(email) {
     const req = new XMLHttpRequest();
-    req.open('GET', url + "/users/match-credentials/" + username);
+    req.open('GET', url + "/users/match-credentials/" + email);
     req.send();
     req.onreadystatechange = (e) => {
         console.log(req.responseText);
@@ -101,4 +115,31 @@ function getPasswordByUsername(username) {
     };
     console.log("test" + document.getElementsByClassName("response-text").innerText);
     return document.getElementsByClassName("response-text").innerText;
+}
+
+function checkValidEmail(email) {
+
+    if (!email.includes('@')) {
+        return false;
+    }
+
+    //before the @
+    const first=email.substring(0, email.indexOf('@'));
+
+    //validate the section before the @
+    if (first.length===0) {
+        return false;
+    }
+
+    for (let i=0; i<first.length; ++i) {
+        const cur = first.charAt(i);
+
+        // check if cur is a letter or number
+        if (!((cur>=48 & cur<=57) || (cur>=97 && cur<=122))) {
+            return false;
+        }
+    }
+
+    //validate the section after the @
+    
 }
