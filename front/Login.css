@@ -159,18 +159,12 @@ input {
     cursor: pointer;
 }
 
-#invalid-email {
-    color:rgba(0, 0, 0, 0);
-}
-
-#invalid-password {
-    color:rgba(0, 0, 0, 0);
-}
-
 .invalid {
-    font-family: 'IBMPlexSans';
+    font-family: 'IBMPlexSansBold';
     font-size: 10px;
     margin-left: 210px;
-    margin-top: -10px;
-    margin-bottom: 5px;
+    margin-top: -5px;
+    margin-bottom: 0px;
+    color: rgba(0, 0, 0, 0);
+    letter-spacing: 0.1em;
 }

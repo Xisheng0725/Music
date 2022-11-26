@@ -17,9 +17,7 @@ async function login() {
         .catch(error => {
             console.error('Error:', error);
         });
-
-    // console.log(res);
-
+        
     if (res) {
         var pass = "";
 
@@ -55,7 +53,11 @@ function guestLogin() {
 }
 
 async function createUser() {
-    const email = document.getElementById("email").value;
+    document.getElementById('invalid-email').style.color="rgba(0, 0, 0, 0)";
+    document.getElementById('invalid-password').style.color="rgba(0, 0, 0, 0)";
+    document.getElementById('invalid-password2').style.color="rgba(0, 0, 0, 0)";
+
+    const email = document.getElementById("email").value.toLowerCase();
     const password = document.getElementById("password").value;
     const password2 = document.getElementById("password2").value;
 
@@ -66,7 +68,12 @@ async function createUser() {
 
     //check if email is valid
     if (!checkValidEmail(email)) {
-
+        document.getElementById('invalid-email').style.color="red";
+    } else if (!checkValidPassword(password)) {
+        document.getElementById('invalid-password').style.color="red";
+        document.getElementById('password2').value="";
+    } else if(!checkPasswordsMatch(password, password2)) {
+        document.getElementById('invalid-password2').style.color="red";
     }
 
     var res = false;
@@ -83,7 +90,7 @@ async function createUser() {
     console.log(res);
 
     if (res) {
-        alert("Sorry! The email " + " is taken. Please try another.");
+        alert("The email " + " is being used by another account. Please try another.");
         return;
     }
 
@@ -101,6 +108,9 @@ async function createUser() {
         });
 
     alert("You have successfully created an account!");
+    localStorage.setItem("isGuest", false);
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", password);
     location.href = 'search.html';
     return;
 }
@@ -118,7 +128,6 @@ function getPasswordByemail(email) {
 }
 
 function checkValidEmail(email) {
-
     if (!email.includes('@')) {
         return false;
     }
@@ -131,15 +140,49 @@ function checkValidEmail(email) {
         return false;
     }
 
+    var prevWasSpecial = true;
     for (let i=0; i<first.length; ++i) {
-        const cur = first.charAt(i);
-
-        // check if cur is a letter or number
-        if (!((cur>=48 & cur<=57) || (cur>=97 && cur<=122))) {
-            return false;
+        const cur = first.charAt(i).charCodeAt(0);
+        // check if cur is a letter or number (or . - _ in certain valid areas)
+        if (!prevWasSpecial) {
+            if (!((cur>=48 & cur<=57) || (cur>=97 && cur<=122) || cur==45 || cur==46 || cur==95)) {
+                return false;
+            }
+            if (cur==45 || cur==46 || cur==95) {
+                prevWasSpecial;
+            }
+        } else if (prevWasSpecial || i===first.length-1) {
+            if (!((cur>=48 & cur<=57) || (cur>=97 && cur<=122))) {
+                return false;
+            }
+            prevWasSpecial=false;
         }
     }
 
     //validate the section after the @
+    const second = email.substring(email.indexOf('@')+1);
+    if (second.indexOf('.')!==second.lastIndexOf('.') || second.indexOf('.')===0 || second.indexOf('.')===second.length-1) {
+        return false;
+    }
     
+    const period=second.indexOf('.');
+
+    for (let i=0; i<second.length; ++i) {
+        if (i!==period) {
+            const cur = second.charAt(i).charCodeAt(0);
+            if (!((cur>=48 & cur<=57) || (cur>=97 && cur<=122))) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+function checkValidPassword(password) {
+    return (password.length>=6 && password.length<=18);
+}
+
+function checkPasswordsMatch(p1, p2) {
+    return p1===p2;
 }
